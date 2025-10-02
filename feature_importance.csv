@@ -1,0 +1,17 @@
+feature,importance
+amount_to_orig_balance_ratio,959
+amount_to_dest_balance_ratio,732
+step,601
+balance_inconsistency_orig,577
+balance_change_orig,569
+balance_inconsistency_dest,480
+amount,405
+oldbalanceOrg,327
+type_encoded,303
+newbalanceDest,303
+balance_change_dest,294
+orig_zero_balance_after,270
+oldbalanceDest,135
+dest_zero_balance_before,25
+newbalanceOrig,0
+is_large_transaction,0
