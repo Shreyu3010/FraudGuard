@@ -1,243 +1,115 @@
-# 🔐 Fraud Detection System for Financial Transactions
+💳 Fraud Detection Model
+🧠 Overview
 
-**A beginner-friendly machine learning solution to detect fraudulent transactions and protect your business from financial losses.**
+This project focuses on detecting fraudulent financial transactions using machine learning.
+The goal is to build a reliable and efficient model that identifies fraud cases while keeping false alarms low.
 
----
+The notebook includes data preprocessing, feature engineering, balancing classes using SMOTE, model training with LightGBM, and performance evaluation using various metrics.
 
-## 📖 What Is This Project?
+📂 Project Structure
+FraudDetection/
+│
+├── Implementation.ipynb   # Jupyter notebook containing the full implementation
+├── fraud.csv              # Input dataset (not included in repo due to size)
+├── fraud_model.pkl        # Saved trained model (optional)
+└── README.md              # Project documentation
 
-This project helps you **automatically identify fraudulent financial transactions** using artificial intelligence. Instead of manually reviewing thousands of transactions, this system learns patterns from your historical data and flags suspicious activities in real-time.
+🚀 Steps Performed
+1. Data Loading
 
-### 🎯 What You'll Get
+The dataset is read in chunks to handle memory efficiently.
 
-- **Trained AI Model**: Automatically detects fraud with 90%+ accuracy
-- **Visual Reports**: Easy-to-understand charts showing model performance
-- **Business Insights**: Actionable recommendations to prevent fraud
-- **Risk Scores**: Each transaction gets a fraud probability (0-100%)
-- **Production Ready**: Save the model and use it on new transactions
+All fraud transactions are kept, and a small sample of non-fraud ones are taken to balance memory use.
 
-### 💡 Who Is This For?
+2. Data Validation
 
-- Financial institutions and payment processors
-- E-commerce platforms handling transactions
-- Anyone with transaction data who wants to detect fraud
-- Data scientists learning fraud detection techniques
-- Business analysts seeking actionable insights
+Verified missing values, column consistency, and correct data types.
 
----
+Converted categorical and numeric columns to suitable formats.
 
-## 🚀 How to Use This Project (Step-by-Step)
+3. Exploratory Data Analysis (EDA)
 
-### Step 1: Prepare Your Data File
+Visualized transaction types, amounts, and fraud ratios.
 
-You need a CSV file named **`fraud.csv`** with your transaction data. The file should have these columns:
+Identified patterns between transaction type and likelihood of fraud.
 
-| Column Name | What It Means | Example |
-|-------------|---------------|---------|
-| `step` | Time period (1 step = 1 hour) | 1, 2, 3... |
-| `type` | Type of transaction | PAYMENT, TRANSFER, CASH_OUT |
-| `amount` | Transaction amount in dollars | 9839.64 |
-| `nameOrig` | Customer who sent money | C1231006815 |
-| `oldbalanceOrg` | Sender's balance before | 170136.00 |
-| `newbalanceOrig` | Sender's balance after | 160296.36 |
-| `nameDest` | Who received the money | M1979787155 |
-| `oldbalanceDest` | Receiver's balance before | 0.00 |
-| `newbalanceDest` | Receiver's balance after | 0.00 |
-| `isFraud` | Is this fraud? (1=Yes, 0=No) | 0 |
-| `isFlaggedFraud` | System flag (optional) | 0 |
+4. Feature Engineering
 
-**Example row:**
-\`\`\`
-1,PAYMENT,9839.64,C1231006815,170136,160296.36,M1979787155,0,0,0,0
-\`\`\`
+Created new features like transaction difference and ratio-based features.
 
-### Step 2: Run the Fraud Detection Script
+Encoded categorical data using LabelEncoder.
 
-Simply click the **"Run Script"** button on `fraud_detection_complete.py` or run this command:
+Standardized numerical features using StandardScaler.
 
-\`\`\`bash
-python scripts/fraud_detection_complete.py
-\`\`\`
+5. Handling Class Imbalance
 
-**What happens when you run it:**
+Used SMOTE (Synthetic Minority Oversampling Technique) to balance fraud vs. non-fraud cases.
 
-1. ✅ **Loads your data** - Reads fraud.csv in memory-efficient chunks
-2. ✅ **Cleans the data** - Removes duplicates and handles missing values
-3. ✅ **Creates smart features** - Builds fraud indicators from your data
-4. ✅ **Trains AI model** - Learns fraud patterns using LightGBM algorithm
-5. ✅ **Tests accuracy** - Evaluates how well it detects fraud
-6. ✅ **Generates insights** - Provides business recommendations
-7. ✅ **Saves the model** - Creates `fraud_model.pkl` for future use
-8. ✅ **Creates visualizations** - Generates charts showing performance
+6. Model Training
 
-### Step 3: Review the Results
+Implemented LightGBM, a gradient boosting algorithm optimized for large datasets.
 
-After running, you'll see:
+Tuned hyperparameters for better accuracy and reduced overfitting.
 
-#### 📊 Console Output
-\`\`\`
-========================================
-STEP 1: LOADING DATA
-========================================
-✓ Processing 6,362,620 transactions in chunks...
-✓ Kept all 8,213 fraud cases (100%)
-✓ Sampled 316,131 non-fraud cases (5%)
-✓ Final dataset: 324,344 transactions
+7. Evaluation
 
-MODEL PERFORMANCE
+Evaluated using metrics like:
 
-✓ ROC-AUC Score: 0.9847 (Excellent!)
-✓ Precision: 94.2% (94 out of 100 flagged are real fraud)
-✓ Recall: 91.8% (catches 92 out of 100 fraud cases)
-✓ F1-Score: 0.93
-\`\`\`
+Precision
 
-#### 📈 Generated Files
+Recall
 
-1. **`fraud_model.pkl`** - Your trained AI model (use this to score new transactions)
-2. **`fraud_detection_report.png`** - Visual performance charts
-3. **`feature_importance.png`** - Which factors matter most for fraud detection
-4. **`confusion_matrix.png`** - Breakdown of correct vs incorrect predictions
+F1-score
 
----
+ROC-AUC Score
 
-## 🔍 Understanding the Results
+Plotted Confusion Matrix, ROC Curve, and Precision-Recall Curve.
 
-### What Do These Metrics Mean?
+8. Model Saving
 
-| Metric | What It Means | Good Score |
-|--------|---------------|------------|
-| **ROC-AUC** | Overall ability to distinguish fraud from legitimate | > 0.90 |
-| **Precision** | When model says "fraud", how often is it right? | > 85% |
-| **Recall** | Out of all real fraud, how many did we catch? | > 90% |
-| **F1-Score** | Balance between precision and recall | > 0.85 |
+The final trained model was saved as fraud_model.pkl for future use.
 
-### 🎯 Key Insights You'll Discover
+📊 Results Summary
+Metric	Value (Example)
+Accuracy	~98%
+Precision	~94%
+Recall	~89%
+F1 Score	~91%
+ROC-AUC	~0.96
 
-The system will tell you:
+(These are sample values; actual results depend on the dataset and tuning.)
 
-1. **Which transaction types are risky**
-   - Example: "Fraud ONLY happens in TRANSFER and CASH_OUT"
-   - Action: Focus monitoring on these types
+🧰 Technologies Used
 
-2. **What patterns indicate fraud**
-   - Example: "Transactions with balance errors are 95% likely fraud"
-   - Action: Add real-time balance validation
+Python 3
 
-3. **Customer behavior red flags**
-   - Example: "Accounts drained to $0 are suspicious"
-   - Action: Alert when balance hits zero
+Pandas, NumPy, Matplotlib, Seaborn – for data analysis and visualization
 
-4. **Expected business impact**
-   - Example: "Can prevent $2.5M in fraud losses annually"
-   - Action: Calculate ROI for implementing the system
+Scikit-learn – for preprocessing and evaluation metrics
 
----
+Imbalanced-learn (SMOTE) – for handling class imbalance
 
-## 💼 Real-World Application
+LightGBM – for model training
 
-### How to Use This in Your Business
+Pickle – for model saving
 
-#### Option 1: Real-Time Fraud Detection
-\`\`\`python
-# Load the trained model
-import pickle
-model = pickle.load(open('fraud_model.pkl', 'rb'))
+📈 Key Learnings
 
-# Score a new transaction
-new_transaction = [...your transaction data...]
-fraud_probability = model.predict_proba(new_transaction)[0][1]
+How to efficiently handle large datasets using chunked reading.
 
-if fraud_probability > 0.7:
-    print("⚠️ HIGH RISK - Review this transaction!")
-elif fraud_probability > 0.5:
-    print("⚡ MEDIUM RISK - Flag for monitoring")
-else:
-    print("✅ LOW RISK - Approve")
-\`\`\`
+Dealing with class imbalance in fraud detection problems.
 
-#### Option 2: Batch Processing
-Process thousands of transactions at once:
-- Upload daily transactions as CSV
-- Run the model to score all transactions
-- Export high-risk cases for investigation
+Building an end-to-end ML pipeline from raw data to model deployment.
 
-#### Option 3: Integration with Existing Systems
-- Connect to your payment gateway API
-- Score transactions before approval
-- Automatically block high-risk transactions
+🧾 Future Improvements
 
----
+Deploy the model as a web API using Flask or FastAPI.
 
-## 🛠️ Technical Details (For Data Scientists)
+Integrate real-time fraud detection for live transactions.
 
-### Algorithm: LightGBM (Gradient Boosting)
+Test with other models like XGBoost, CatBoost, or Neural Networks.
 
-**Why we chose this:**
-- ⚡ Fast training on millions of rows
-- 💾 Memory-efficient (works on large datasets)
-- 🎯 Excellent for imbalanced data (fraud is rare)
-- 📊 Provides feature importance rankings
-- 🚀 Production-ready and scalable
+👩‍💻 Author
 
-### Handling Imbalanced Data
-
-**The Challenge:** Fraud is rare (typically <1% of transactions)
-
-**Our Solution:**
-- Keep ALL fraud cases (100% of fraud data)
-- Sample only 5% of non-fraud cases
-- Use SMOTE to create synthetic fraud examples
-- This gives the model enough fraud patterns to learn from
-
-### Feature Engineering
-
-We create smart indicators from your raw data:
-
-\`\`\`python
-# Balance consistency check
-balance_error_orig = (oldbalanceOrg - newbalanceOrig) - amount
-
-# Zero balance flags (suspicious pattern)
-orig_zero_after = (newbalanceOrig == 0)
-
-# Customer-to-customer transfers (high risk)
-is_c2c_transfer = (nameOrig starts with 'C') AND (nameDest starts with 'C')
-\`\`\`
-
-### Memory Optimization
-
-For large datasets (millions of rows):
-- Reads data in 50,000 row chunks
-- Processes each chunk separately
-- Never loads entire dataset into memory
-- Uses efficient data types (int32 instead of int64)
-
----
-
-## 📊 Sample Output Visualizations
-
-### 1. ROC Curve
-Shows how well the model separates fraud from legitimate transactions. The closer to the top-left corner, the better.
-
-### 2. Precision-Recall Curve
-Shows the trade-off between catching fraud (recall) and avoiding false alarms (precision).
-
-### 3. Confusion Matrix
-\`\`\`
-                Predicted
-              Not Fraud  |  Fraud
-Actual  -------------------------
-Not Fraud |   95,000   |   500
-Fraud     |      150   | 1,850
-\`\`\`
-
-### 4. Feature Importance
-Ranks which factors matter most:
-1. Balance error (40% importance)
-2. Transaction type (25% importance)
-3. Amount (15% importance)
-4. Zero balance flags (12% importance)
-5. Customer type (8% importance)
-
-
+Shreya Pawar
+B.Tech in Computer Science (AIML) | KIT’s College of Engineering, Kolhapur
