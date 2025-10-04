@@ -241,45 +241,4 @@ Ranks which factors matter most:
 4. Zero balance flags (12% importance)
 5. Customer type (8% importance)
 
----
-
-## ⚠️ Troubleshooting
-
-### Problem: "Out of Memory" Error
-
-**Solution:** The script automatically handles this by:
-- Reading data in small chunks (50k rows at a time)
-- Sampling non-fraud cases to reduce dataset size
-- Using memory-efficient data types
-
-If still failing, reduce `CHUNK_SIZE` in the script from 50000 to 25000.
-
-### Problem: "File not found: fraud.csv"
-
-**Solution:** Make sure your CSV file is:
-- Named exactly `fraud.csv` (lowercase)
-- In the same folder as the script
-- Not open in Excel or another program
-
-### Problem: Low Model Performance (ROC-AUC < 0.80)
-
-**Possible causes:**
-- Not enough fraud examples (need at least 100)
-- Data quality issues (missing values, errors)
-- Fraud patterns are random (not predictable)
-
-**Solutions:**
-- Collect more historical fraud data
-- Check data quality and clean errors
-- Add more features (time of day, location, etc.)
-
-### Problem: Too Many False Positives
-
-**Solution:** Adjust the decision threshold:
-\`\`\`python
-# Instead of 0.5, use 0.7 for fewer false alarms
-if fraud_probability > 0.7:  # More conservative
-    flag_as_fraud()
-\`\`\`
-
 
