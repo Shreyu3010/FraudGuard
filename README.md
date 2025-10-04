@@ -84,9 +84,8 @@ STEP 1: LOADING DATA
 ✓ Sampled 316,131 non-fraud cases (5%)
 ✓ Final dataset: 324,344 transactions
 
-========================================
-STEP 5: MODEL PERFORMANCE
-========================================
+MODEL PERFORMANCE
+
 ✓ ROC-AUC Score: 0.9847 (Excellent!)
 ✓ Precision: 94.2% (94 out of 100 flagged are real fraud)
 ✓ Recall: 91.8% (catches 92 out of 100 fraud cases)
